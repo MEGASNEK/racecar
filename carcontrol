@@ -1,0 +1,38 @@
+import radio
+from microbit import *
+import neopixel
+setup()
+leftstop = False
+rightstop = False
+remOn = False
+while (not remOn):
+    display.show(Image.ANGRY)
+    rec = radio.receive()
+    if (rec):
+        remOn = True
+
+display.show(Image.HAPPY)
+while True:
+    rec = radio.receive()
+    if (rec == 'left'):
+           if (leftstop == True):
+               pin8.write_digital(0)
+               pin0.write_analog(1000)
+               leftstop = False
+           else:
+               pin8.write_digital(0)
+               pin0.write_analog(100)
+               leftstop = True
+    elif (rec == 'right'):
+           if (rightstop == True):
+               pin12.write_digital(0)
+               pin1.write_analog(1000)
+               rightstop = False
+           else:
+               pin12.write_digital(0)
+               pin1.write_analog(100)
+               rightstop = True
+def setup:
+    radio.config(channel=64)
+    radio.on()
+
